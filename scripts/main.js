@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(ap.cursos);
     var aprendizTable = document.getElementById("aprendiz");
     var estadisticasTable = document.getElementById("estadisticas");
+    var cursosTable = document.getElementById("cursos");
     mostrarDatosAprendiz(ap, aprendizTable);
     mostrarEstadisticas(ap, estadisticasTable);
+    mostrarCursosAprendiz(ap, cursosTable);
 });
 function mostrarDatosAprendiz(aprendiz, tabla) {
     var tbodyAprendiz = document.createElement("tbody");
@@ -23,4 +25,14 @@ function mostrarEstadisticas(aprendiz, tabla) {
     var trElement = document.createElement("tr");
     trElement.innerHTML = "<td><b>Cursos certificados</b></td><td>".concat(numeroCertificados, "</td>");
     tabla.appendChild(trElement);
+}
+function mostrarCursosAprendiz(aprendiz, tabla) {
+    var cursosTbody = document.createElement("tbody");
+    for (var _i = 0, _a = aprendiz.cursos; _i < _a.length; _i++) {
+        var curso = _a[_i];
+        var trElement = document.createElement("tr");
+        trElement.innerHTML = "\n            <td>".concat(curso.nombre, "</td>\n            <td>").concat(curso.horas, "</td>\n            <td>").concat(curso.calificacion, "</td>\n            <td>").concat(curso.certificado, "</td>\n            <td>").concat(curso.anio, "</td>\n        ");
+        cursosTbody.appendChild(trElement);
+    }
+    tabla.appendChild(cursosTbody);
 }

@@ -12,9 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(ap.cursos);
     const aprendizTable: HTMLElement = document.getElementById("aprendiz")!;
     let estadisticasTable: HTMLElement  = document.getElementById("estadisticas")!;
+    let cursosTable: HTMLElement = document.getElementById("cursos")!;
    
     mostrarDatosAprendiz(ap, aprendizTable);
     mostrarEstadisticas(ap, estadisticasTable);
+    mostrarCursosAprendiz(ap, cursosTable);
    
 });
 
@@ -37,4 +39,21 @@ function mostrarEstadisticas(aprendiz: Aprendiz, tabla: HTMLElement): void{
     let trElement: HTMLElement = document.createElement("tr");
     trElement.innerHTML = `<td><b>Cursos certificados</b></td><td>${numeroCertificados}</td>`;
     tabla.appendChild(trElement)
+}
+
+function mostrarCursosAprendiz(aprendiz: Aprendiz, tabla: HTMLElement): void {
+    let cursosTbody: HTMLElement = document.createElement("tbody");
+
+    for (let curso of aprendiz.cursos) {
+        let trElement: HTMLElement = document.createElement("tr");
+        trElement.innerHTML = `
+            <td>${curso.nombre}</td>
+            <td>${curso.horas}</td>
+            <td>${curso.calificacion}</td>
+            <td>${curso.certificado}</td>
+            <td>${curso.anio}</td>
+        `;
+        cursosTbody.appendChild(trElement);
+    }
+    tabla.appendChild(cursosTbody);
 }
