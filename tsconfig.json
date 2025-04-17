@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
-        "target":"ES5",
+        "target": "ES2015",
         "module": "ES6",
         "outDir": "./scripts",
         "rootDir": "./",
         "strict": true,
-        "alwaysStrict": true
+        "alwaysStrict": true,
+        "lib": ["ES2015", "DOM"]
     }
 }

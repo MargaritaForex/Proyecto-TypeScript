@@ -1,37 +1,54 @@
 import { Aprendiz, NivelEducativo } from "./aprendiz.js";
 import { Curso } from "./curso.js";
-var cursos = [new Curso("Prácticas esenciales para el agilismo", 20, 90, true, 2019),
+let cursos = [new Curso("Prácticas esenciales para el agilismo", 20, 90, true, 2019),
     new Curso("Ingenieria de software para la web", 15, 99, true, 2018),
     new Curso("Pruebas automatizadas", 25, 50, true, 2020),
     new Curso("Principios de diseño y arquitectura", 30, 75, true, 2020)];
-// Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', function () {
-    var ap = new Aprendiz("Margarita", "Forero", "avatar.png", 30, NivelEducativo.POSGRADO, cursos);
-    console.log(ap.cursos);
-    var aprendizTable = document.getElementById("aprendiz");
-    var estadisticasTable = document.getElementById("estadisticas");
-    var cursosTable = document.getElementById("cursos");
-    mostrarDatosAprendiz(ap, aprendizTable);
-    mostrarEstadisticas(ap, estadisticasTable);
-    mostrarCursosAprendiz(ap, cursosTable);
-});
+export const ap = new Aprendiz("Margarita", "Forero", "avatar.png", 30, NivelEducativo.POSGRADO, cursos);
+console.log(ap.cursos);
+let aprendizTable = document.getElementById("aprendiz");
+let estadisticasTable = document.getElementById("estadisticas");
+let cursosTable = document.getElementById("cursos");
+let btnFiltro = document.getElementById("boton-filtro");
+let textoBusqueda = document.getElementById("texto-busqueda");
+btnFiltro.onclick = () => {
+    let text = textoBusqueda.value;
+    text = (text == null) ? "" : text;
+    cursosTable.getElementsByTagName("tbody")[0].remove();
+    const cursosFiltrados = ap.cursos.filter(c => c.nombre.match(text));
+    mostrarCursosAprendiz(cursosFiltrados, cursosTable);
+};
+mostrarDatosAprendiz(ap, aprendizTable);
+mostrarEstadisticas(ap, estadisticasTable);
+mostrarCursosAprendiz(ap.cursos, cursosTable);
 function mostrarDatosAprendiz(aprendiz, tabla) {
-    var tbodyAprendiz = document.createElement("tbody");
-    tbodyAprendiz.innerHTML = "\n        <tr><td colspan=\"2\"><img src=\"".concat(aprendiz.avatar, "\" alt=\"Avatar del aprendiz\" height=\"100\"></td></tr>\n        <tr><td>Nombres:</td><td>").concat(aprendiz.nombres, "</td></tr>\n        <tr><td>Apellidos:</td><td>").concat(aprendiz.apellidos, "</td></tr>\n        <tr><td>Nivel:</td><td>").concat(aprendiz.nivelEducativo, "</td></tr>\n        <tr><td>Edad:</td><td>").concat(aprendiz.edad, "</td></tr>\n    ");
+    const tbodyAprendiz = document.createElement("tbody");
+    tbodyAprendiz.innerHTML = `
+        <tr><td colspan="2"><img src="${aprendiz.avatar}" alt="Avatar del aprendiz" height="100"></td></tr>
+        <tr><td>Nombres:</td><td>${aprendiz.nombres}</td></tr>
+        <tr><td>Apellidos:</td><td>${aprendiz.apellidos}</td></tr>
+        <tr><td>Nivel:</td><td>${aprendiz.nivelEducativo}</td></tr>
+        <tr><td>Edad:</td><td>${aprendiz.edad}</td></tr>
+    `;
     tabla.appendChild(tbodyAprendiz);
 }
 function mostrarEstadisticas(aprendiz, tabla) {
-    var numeroCertificados = aprendiz.darCursosCertificados();
-    var trElement = document.createElement("tr");
-    trElement.innerHTML = "<td><b>Cursos certificados</b></td><td>".concat(numeroCertificados, "</td>");
+    let numeroCertificados = aprendiz.darCursosCertificados();
+    let trElement = document.createElement("tr");
+    trElement.innerHTML = `<td><b>Cursos certificados</b></td><td>${numeroCertificados}</td>`;
     tabla.appendChild(trElement);
 }
-function mostrarCursosAprendiz(aprendiz, tabla) {
-    var cursosTbody = document.createElement("tbody");
-    for (var _i = 0, _a = aprendiz.cursos; _i < _a.length; _i++) {
-        var curso = _a[_i];
-        var trElement = document.createElement("tr");
-        trElement.innerHTML = "\n            <td>".concat(curso.nombre, "</td>\n            <td>").concat(curso.horas, "</td>\n            <td>").concat(curso.calificacion, "</td>\n            <td>").concat(curso.certificado, "</td>\n            <td>").concat(curso.anio, "</td>\n        ");
+function mostrarCursosAprendiz(cursos, tabla) {
+    let cursosTbody = document.createElement("tbody");
+    for (let curso of cursos) {
+        let trElement = document.createElement("tr");
+        trElement.innerHTML = `
+            <td>${curso.nombre}</td>
+            <td>${curso.horas}</td>
+            <td>${curso.calificacion}</td>
+            <td>${curso.certificado}</td>
+            <td>${curso.anio}</td>
+        `;
         cursosTbody.appendChild(trElement);
     }
     tabla.appendChild(cursosTbody);

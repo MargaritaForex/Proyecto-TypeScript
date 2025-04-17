@@ -6,19 +6,28 @@ let cursos = [new Curso("Prácticas esenciales para el agilismo",20,90,true, 201
               new Curso("Pruebas automatizadas",25,50,true, 2020),
               new Curso("Principios de diseño y arquitectura",30,75,true, 2020)];
 
-// Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
-    const ap = new Aprendiz("Margarita", "Forero", "avatar.png", 30, NivelEducativo.POSGRADO, cursos);
-    console.log(ap.cursos);
-    const aprendizTable: HTMLElement = document.getElementById("aprendiz")!;
-    let estadisticasTable: HTMLElement  = document.getElementById("estadisticas")!;
-    let cursosTable: HTMLElement = document.getElementById("cursos")!;
-   
-    mostrarDatosAprendiz(ap, aprendizTable);
-    mostrarEstadisticas(ap, estadisticasTable);
-    mostrarCursosAprendiz(ap, cursosTable);
-   
-});
+
+export const   ap = new Aprendiz("Margarita", "Forero", "avatar.png", 30, NivelEducativo.POSGRADO, cursos);
+console.log(ap.cursos);
+
+
+let aprendizTable: HTMLElement = document.getElementById("aprendiz")!;
+let estadisticasTable: HTMLElement  = document.getElementById("estadisticas")!;
+let cursosTable: HTMLElement = document.getElementById("cursos")!;
+let btnFiltro: HTMLElement = document.getElementById("boton-filtro")!;
+let textoBusqueda = <HTMLInputElement>document.getElementById("texto-busqueda")!;
+
+btnFiltro.onclick = () => {
+    let text: string = textoBusqueda.value;
+    text = (text == null) ? "" : text;
+    cursosTable.getElementsByTagName("tbody")[0].remove();
+    const cursosFiltrados: Curso[] = ap.cursos.filter(c => c.nombre.match(text)); 
+    mostrarCursosAprendiz(cursosFiltrados, cursosTable);
+};
+
+mostrarDatosAprendiz(ap, aprendizTable);
+mostrarEstadisticas(ap, estadisticasTable);
+mostrarCursosAprendiz(ap.cursos, cursosTable);
 
 function mostrarDatosAprendiz(aprendiz: Aprendiz, tabla: HTMLElement): void {
     const tbodyAprendiz = document.createElement("tbody");
@@ -41,10 +50,10 @@ function mostrarEstadisticas(aprendiz: Aprendiz, tabla: HTMLElement): void{
     tabla.appendChild(trElement)
 }
 
-function mostrarCursosAprendiz(aprendiz: Aprendiz, tabla: HTMLElement): void {
+function mostrarCursosAprendiz(cursos: Curso[], tabla: HTMLElement): void {
     let cursosTbody: HTMLElement = document.createElement("tbody");
 
-    for (let curso of aprendiz.cursos) {
+    for (let curso of cursos) {
         let trElement: HTMLElement = document.createElement("tr");
         trElement.innerHTML = `
             <td>${curso.nombre}</td>

@@ -4,8 +4,8 @@ export var NivelEducativo;
     NivelEducativo["UNIVERSITARIO"] = "Universitario";
     NivelEducativo["POSGRADO"] = "Posgrado";
 })(NivelEducativo || (NivelEducativo = {}));
-var Aprendiz = /** @class */ (function () {
-    function Aprendiz(nombres, apellidos, avatar, edad, nivelEducativo, cursos) {
+export class Aprendiz {
+    constructor(nombres, apellidos, avatar, edad, nivelEducativo, cursos) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.avatar = avatar;
@@ -13,16 +13,14 @@ var Aprendiz = /** @class */ (function () {
         this.nivelEducativo = nivelEducativo;
         this.cursos = cursos;
     }
-    Aprendiz.prototype.darCursosCertificados = function () {
-        var totalCursosC = 0;
-        for (var index = 0; index < this.cursos.length; index++) {
-            var curso = this.cursos[index];
+    darCursosCertificados() {
+        let totalCursosC = 0;
+        for (let index = 0; index < this.cursos.length; index++) {
+            let curso = this.cursos[index];
             if (curso.certificado) {
                 totalCursosC += 1;
             }
         }
         return totalCursosC;
-    };
-    return Aprendiz;
-}());
-export { Aprendiz };
+    }
+}
