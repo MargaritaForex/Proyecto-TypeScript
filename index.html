@@ -3,9 +3,10 @@
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Proyecto TypeScript</title>
+  <title>Taller TypeScript</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="tallertypescript.css">
   <script type="module" src='./scripts/main.js'></script>
   <style>
     table {
@@ -31,22 +32,37 @@
 </head>
 <body>
   <h1>Taller TypeScript</h1>
-  <table id="aprendiz"></table>
-  <h2>Estadisticas</h2>
-  <table id="estadisticas"></table> 
-  <h2>Cursos tomados</h2>
-  <input type="text" class="form-control" id="texto-busqueda" placeholder="Filtrar por nombre">
-  <button type="button" id="boton-filtro" class="btn btn-sucess">Aplicar</button>
-  <table id="cursos">
-    <thead class="thead-dark">
-      <tr>
-        <th>Nombre</th>
-        <th>Horas</th>
-        <th>Calificación</th>
-        <th>Certificado</th>
-        <th>Año</th>
-      </tr>
-    </thead>
-  </table>
+  
+  <div class="main-container">
+    <div class="info-container">
+      <table id="aprendiz"></table>
+      <table id="estadisticas">
+        <thead>
+          <tr>
+            <th colspan="2">Estadísticas</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    
+    <div class="cursos-container">
+      <div class="filtro-container">
+        <input type="text" id="texto-busqueda" placeholder="Buscar curso...">
+        <button id="boton-filtro">Buscar</button>
+      </div>
+      
+      <table id="cursos">
+        <thead>
+          <tr>
+            <th>Nombre del curso</th>
+            <th>Horas</th>
+            <th>Calificación</th>
+            <th>Certificado</th>
+            <th>Año</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
 </body>
 </html>
