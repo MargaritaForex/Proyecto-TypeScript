@@ -1,15 +1,21 @@
 import { Aprendiz, NivelEducativo } from "./aprendiz.js";
+import { Curso } from "./curso.js";
+
+let cursos = [new Curso("Prácticas esenciales para el agilismo",20,90,true, 2019),
+              new Curso("Ingenieria de software para la web",15,99,true, 2018),
+              new Curso("Pruebas automatizadas",25,50,true, 2020),
+              new Curso("Principios de diseño y arquitectura",30,75,true, 2020)];
 
 // Esperar a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
-    const ap = new Aprendiz("Margarita", "Forero", "avatar.png", 30, NivelEducativo.POSGRADO);
-    const aprendizTable: HTMLElement | null = document.getElementById("aprendiz");
-    
-    if (aprendizTable) {
-        mostrarDatosAprendiz(ap, aprendizTable);
-    } else {
-        console.error("No se encontró el elemento con id 'aprendiz'");
-    }
+    const ap = new Aprendiz("Margarita", "Forero", "avatar.png", 30, NivelEducativo.POSGRADO, cursos);
+    console.log(ap.cursos);
+    const aprendizTable: HTMLElement = document.getElementById("aprendiz")!;
+    let estadisticasTable: HTMLElement  = document.getElementById("estadisticas")!;
+   
+    mostrarDatosAprendiz(ap, aprendizTable);
+    mostrarEstadisticas(ap, estadisticasTable);
+   
 });
 
 function mostrarDatosAprendiz(aprendiz: Aprendiz, tabla: HTMLElement): void {
@@ -24,4 +30,11 @@ function mostrarDatosAprendiz(aprendiz: Aprendiz, tabla: HTMLElement): void {
     `;
 
     tabla.appendChild(tbodyAprendiz);
+}
+
+function mostrarEstadisticas(aprendiz: Aprendiz, tabla: HTMLElement): void{
+    let numeroCertificados:number = aprendiz.darCursosCertificados();
+    let trElement: HTMLElement = document.createElement("tr");
+    trElement.innerHTML = `<td><b>Cursos certificados</b></td><td>${numeroCertificados}</td>`;
+    tabla.appendChild(trElement)
 }
